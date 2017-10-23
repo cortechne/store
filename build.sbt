@@ -12,6 +12,7 @@ resolvers += "ruimo.com" at "http://static.ruimo.com/release"
 
 // For IntelliJ hack.
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+playAssetsDirectories <+= baseDirectory / "ssl"
 
 libraryDependencies ++= Seq(
   "postgresql" % "postgresql" % "9.1-901.jdbc4",
@@ -29,4 +30,3 @@ libraryDependencies ++= Seq(
   ws,
   filters
 )
-

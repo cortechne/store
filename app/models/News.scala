@@ -130,4 +130,3 @@ object News {
       'newsId -> newsId.id
     ).executeUpdate()
 }
-
