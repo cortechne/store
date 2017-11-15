@@ -277,4 +277,3 @@ POST    /itemzip/upload                  controllers.ItemMaintenanceByCsv.upload
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                    controllers.Assets.at(path="/public", file)
-GET     /.well-known/pki-validation/*file                  controllers.Assets.at(path="/ssl", file)
