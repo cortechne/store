@@ -17,7 +17,7 @@ case class ChangeSiteItemMetadataTable(
 
 case class ChangeSiteItemMetadata(
   id: Long, siteId: Long, metadataType: Int, metadata: Long,
-  var validUntil: DateTime = new Date()
+  var validUntil: DateTime = new DateTime(9999, 12, 31, 23, 59, 59)
 ) {
   def update(itemId: Long)(implicit conn: Connection) {
     SiteItemNumericMetadata.update(id, metadata, validUntil.getMillis)
