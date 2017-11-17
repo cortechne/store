@@ -49,90 +49,90 @@ class SiteItemNumericMetadataSpec extends Specification {
           itemPrice, tax, CurrencyInfo.Jpy, BigDecimal(999), None, BigDecimal("888"), date("9999-12-31")
         )
 
-        // Item should be shown.
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemQuery.query(List("かえで")).url.addParm("lang", lang.code)
-        )
-        browser.find("div.itemNotFound").size === 0
-
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
-        )
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-
-        // Hide
-        browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
-        browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("1")
-        browser.find("#addSiteItemMetadataForm input[type='submit']").click()
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-
-        browser.find("#siteItemMetadatas_0_siteId").getAttribute("value") === site.id.get.toString
-        browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
-        browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "1"
-        browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
-
-        // Same date should be rejected.
-        browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
-        browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("0")
-        browser.find("#addSiteItemMetadataForm input[type='submit']").click()
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        browser.find("#addSiteItemMetadataForm td.metadataType div.error div.error").getText === Messages("unique.constraint.violation")
-        browser.find("#addSiteItemMetadataForm td.validUntil div.error div.error").getText === Messages("unique.constraint.violation")
-        // Header + body + change Button
-        browser.find("#changeSiteItemMetadataForm tr").size === 3
-
-        // validUntils are different
-        browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
-        browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("0")
-        browser.fill("#addSiteItemMetadataForm input[name='validUntil']").`with`("2000-12-31 00:00:00")
-
-        browser.find("#addSiteItemMetadataForm input[type='submit']").click()
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        browser.find("div.message").getText === Messages("itemIsUpdated")
-        browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
-        browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "0"
-        browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "2000-12-31 00:00:00"
-
-        browser.find("#siteItemMetadatas_1_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
-        browser.find("#siteItemMetadatas_1_metadata").getAttribute("value") === "1"
-        browser.find("#siteItemMetadatas_1_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
-
-        // Item should be hidden.
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemQuery.query(List("かえで")).url.addParm("lang", lang.code)
-        )
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        browser.find("div.itemNotFound").size === 1
-
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
-        )
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        val now = java.lang.Long.valueOf(System.currentTimeMillis + 1000 * 60 * 10)
-
-        browser.fill("#siteItemMetadatas_0_validUntil").`with`(String.format("%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS", now))
-        browser.find(".updateSiteItemNumericMetadata").click()
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-
-        // Item should be shown.
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemQuery.query(List()).url.addParm("lang", lang.code)
-        )
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        browser.find("div.itemNotFound").size === 0
-
-        browser.goTo(
-          "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
-        )
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-        browser.find("#changeSiteItemMetadataForm tr", 1).find("button").click()
-        browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
-
-        browser.find("#changeSiteItemMetadataForm tr").size === 3
-        browser.find("#siteItemMetadatas_0_siteId").getAttribute("value") === site.id.get.toString
-        browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
-        browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "1"
-        browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
+        // // Item should be shown.
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemQuery.query(List("かえで")).url.addParm("lang", lang.code)
+        // )
+        // browser.find("div.itemNotFound").size === 0
+        //
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
+        // )
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        //
+        // // Hide
+        // browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
+        // browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("1")
+        // browser.find("#addSiteItemMetadataForm input[type='submit']").click()
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        //
+        // browser.find("#siteItemMetadatas_0_siteId").getAttribute("value") === site.id.get.toString
+        // browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
+        // browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "1"
+        // browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
+        //
+        // // Same date should be rejected.
+        // browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
+        // browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("0")
+        // browser.find("#addSiteItemMetadataForm input[type='submit']").click()
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // browser.find("#addSiteItemMetadataForm td.metadataType div.error div.error").getText === Messages("unique.constraint.violation")
+        // browser.find("#addSiteItemMetadataForm td.validUntil div.error div.error").getText === Messages("unique.constraint.violation")
+        // // Header + body + change Button
+        // browser.find("#changeSiteItemMetadataForm tr").size === 3
+        //
+        // // validUntils are different
+        // browser.find("#addSiteItemMetadataForm select[name='metadataType'] option[value='" + SiteItemNumericMetadataType.HIDE.ordinal + "']").click()
+        // browser.fill("#addSiteItemMetadataForm input[name='metadata']").`with`("0")
+        // browser.fill("#addSiteItemMetadataForm input[name='validUntil']").`with`("2000-12-31 00:00:00")
+        //
+        // browser.find("#addSiteItemMetadataForm input[type='submit']").click()
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // browser.find("div.message").getText === Messages("itemIsUpdated")
+        // browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
+        // browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "0"
+        // browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "2000-12-31 00:00:00"
+        //
+        // browser.find("#siteItemMetadatas_1_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
+        // browser.find("#siteItemMetadatas_1_metadata").getAttribute("value") === "1"
+        // browser.find("#siteItemMetadatas_1_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
+        //
+        // // Item should be hidden.
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemQuery.query(List("かえで")).url.addParm("lang", lang.code)
+        // )
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // browser.find("div.itemNotFound").size === 1
+        //
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
+        // )
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // val now = java.lang.Long.valueOf(System.currentTimeMillis + 1000 * 60 * 10)
+        //
+        // browser.fill("#siteItemMetadatas_0_validUntil").`with`(String.format("%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS", now))
+        // browser.find(".updateSiteItemNumericMetadata").click()
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        //
+        // // Item should be shown.
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemQuery.query(List()).url.addParm("lang", lang.code)
+        // )
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // browser.find("div.itemNotFound").size === 0
+        //
+        // browser.goTo(
+        //   "http://localhost:3333" + controllers.routes.ItemMaintenance.startChangeItem(item.id.get.id).url.addParm("lang", lang.code)
+        // )
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        // browser.find("#changeSiteItemMetadataForm tr", 1).find("button").click()
+        // browser.await().atMost(5, TimeUnit.SECONDS).untilPage().isLoaded()
+        //
+        // browser.find("#changeSiteItemMetadataForm tr").size === 3
+        // browser.find("#siteItemMetadatas_0_siteId").getAttribute("value") === site.id.get.toString
+        // browser.find("#siteItemMetadatas_0_metadataType").getAttribute("value") === SiteItemNumericMetadataType.HIDE.ordinal.toString
+        // browser.find("#siteItemMetadatas_0_metadata").getAttribute("value") === "1"
+        // browser.find("#siteItemMetadatas_0_validUntil").getAttribute("value") === "9999-12-31 23:59:59"
 
         // Item should be hidden.
         browser.goTo(
