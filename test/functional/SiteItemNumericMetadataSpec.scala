@@ -35,19 +35,19 @@ class SiteItemNumericMetadataSpec extends Specification {
         implicit def date2milli(d: java.sql.Date) = d.getTime
         implicit val lang = Lang("ja")
         val user = loginWithTestUser(browser)
-        val site = Site.createNew(LocaleInfo.Ja, "Store01")
-        val cat = Category.createNew(Map(LocaleInfo.Ja -> "Cat01"))
-        val tax = Tax.createNew
-        val taxName = TaxName.createNew(tax, LocaleInfo.Ja, "外税")
-        val taxHis = TaxHistory.createNew(tax, TaxType.INNER_TAX, BigDecimal("5"), date("9999-12-31"))
-        val item = Item.createNew(cat)
-        val siteItem = SiteItem.createNew(site, item)
-        val itemName = ItemName.createNew(item, Map(LocaleInfo.Ja -> "かえで"))
-        val itemDesc = ItemDescription.createNew(item, site, "かえで説明")
-        val itemPrice = ItemPrice.createNew(item, site)
-        val itemPriceHistory = ItemPriceHistory.createNew(
-          itemPrice, tax, CurrencyInfo.Jpy, BigDecimal(999), None, BigDecimal("888"), date("9999-12-31")
-        )
+        // val site = Site.createNew(LocaleInfo.Ja, "Store01")
+        // val cat = Category.createNew(Map(LocaleInfo.Ja -> "Cat01"))
+        // val tax = Tax.createNew
+        // val taxName = TaxName.createNew(tax, LocaleInfo.Ja, "外税")
+        // val taxHis = TaxHistory.createNew(tax, TaxType.INNER_TAX, BigDecimal("5"), date("9999-12-31"))
+        // val item = Item.createNew(cat)
+        // val siteItem = SiteItem.createNew(site, item)
+        // val itemName = ItemName.createNew(item, Map(LocaleInfo.Ja -> "かえで"))
+        // val itemDesc = ItemDescription.createNew(item, site, "かえで説明")
+        // val itemPrice = ItemPrice.createNew(item, site)
+        // val itemPriceHistory = ItemPriceHistory.createNew(
+        //   itemPrice, tax, CurrencyInfo.Jpy, BigDecimal(999), None, BigDecimal("888"), date("9999-12-31")
+        // )
 
         // // Item should be shown.
         // browser.goTo(
