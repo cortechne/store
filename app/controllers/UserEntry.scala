@@ -53,8 +53,8 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
       "zip1" -> text.verifying(z => Shipping.Zip1Pattern.matcher(z).matches),
       "zip2" -> text.verifying(z => Shipping.Zip2Pattern.matcher(z).matches),
       "prefecture" -> number,
-      "address1" -> text.verifying(nonEmpty, maxLength(256)),
-      "address2" -> text.verifying(nonEmpty, maxLength(256)),
+      "address1" -> text.verifying(maxLength(256)),
+      "address2" -> text.verifying(maxLength(256)),
       "address3" -> text.verifying(maxLength(256)),
       "tel" -> text.verifying(Messages("error.number"), z => Shipping.TelPattern.matcher(z).matches),
       "fax" -> text.verifying(Messages("error.number"), z => Shipping.TelOptionPattern.matcher(z).matches),
@@ -104,7 +104,7 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
         Ok(views.html.userEntryJa(jaForm, Address.JapanPrefectures))
       case Locale.JAPAN =>
         Ok(views.html.userEntryJa(jaForm, Address.JapanPrefectures))
-        
+
       case _ =>
         Ok(views.html.userEntryJa(jaForm, Address.JapanPrefectures))
     }
@@ -142,7 +142,7 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
       "tel1" -> text.verifying(Messages("error.number"), z => TelPattern.matcher(z).matches)
     )(ChangeUserInfo.apply)(ChangeUserInfo.unapply)
   )
-    
+
 
   def createRegistrationForm(implicit lang: Lang) = Form(
     mapping(
@@ -281,7 +281,7 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
           lastName = user.lastName,
           firstNameKana = addr.firstNameKana,
           lastNameKana = addr.lastNameKana,
-          email = user.email, 
+          email = user.email,
           currentPassword = "",
           countryIndex = addr.countryCode.ordinal,
           zip1 = addr.zip1,
@@ -374,7 +374,7 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
   def updateUser(userInfo: ChangeUserInfo, user: StoreUser)(implicit conn: Connection) {
     StoreUser.update(
       user.id.get,
-      user.userName, 
+      user.userName,
       userInfo.firstName, userInfo.middleName, userInfo.lastName,
       userInfo.email, user.passwordHash, user.salt, user.companyName
     )
@@ -484,7 +484,7 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
           if (
             ResetPassword.changePassword(
               newInfo.userId,
-              newInfo.token, 
+              newInfo.token,
               System.currentTimeMillis - ResetPasswordTimeout(),
               newInfo.passwords._1
             )
