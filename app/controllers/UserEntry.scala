@@ -136,8 +136,8 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
       "zip1" -> text.verifying(z => Zip1Pattern.matcher(z).matches),
       "zip2" -> text.verifying(z => Zip2Pattern.matcher(z).matches),
       "prefecture" -> number,
-      "address1" -> text.verifying(nonEmpty, maxLength(256)),
-      "address2" -> text.verifying(nonEmpty, maxLength(256)),
+      "address1" -> text.verifying(maxLength(256)),
+      "address2" -> text.verifying(maxLength(256)),
       "address3" -> text.verifying(maxLength(256)),
       "tel1" -> text.verifying(Messages("error.number"), z => TelPattern.matcher(z).matches)
     )(ChangeUserInfo.apply)(ChangeUserInfo.unapply)
@@ -163,8 +163,8 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
       "zip1" -> text.verifying(z => Zip1Pattern.matcher(z).matches),
       "zip2" -> text.verifying(z => Zip2Pattern.matcher(z).matches),
       "prefecture" -> number,
-      "address1" -> text.verifying(nonEmpty, maxLength(256)),
-      "address2" -> text.verifying(nonEmpty, maxLength(256)),
+      "address1" -> text.verifying(maxLength(256)),
+      "address2" -> text.verifying(maxLength(256)),
       "address3" -> text.verifying(maxLength(256)),
       "tel1" -> text.verifying(nonEmpty).verifying(Messages("error.number"), z => TelPattern.matcher(z).matches)
     )(RegisterUserInfo.apply4Japan)(RegisterUserInfo.unapply4Japan)
