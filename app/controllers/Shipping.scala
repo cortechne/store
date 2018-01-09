@@ -114,9 +114,9 @@ object Shipping extends Controller with NeedLogin with HasLogger with I18nAware 
   val firstNameKanaConstraint = List(nonEmpty, maxLength(64))
   val lastNameKanaConstraint = List(nonEmpty, maxLength(64))
 
-  val Zip1Pattern = Pattern.compile("\\d{3}")
-  val Zip2Pattern = Pattern.compile("\\d{4}")
-  val TelPattern = Pattern.compile("\\d+{1,32}")
+  val Zip1Pattern = Pattern.compile("\\d{0,3}")
+  val Zip2Pattern = Pattern.compile("\\d{0,4}")
+  val TelPattern = Pattern.compile("\\d+{0,32}")
   val TelOptionPattern = Pattern.compile("\\d{0,32}")
   def shippingDateFormat(implicit lang: Lang) = DateTimeFormat.forPattern(Messages("shipping.date.format"))
 
@@ -175,7 +175,7 @@ object Shipping extends Controller with NeedLogin with HasLogger with I18nAware 
             Ok(views.html.shippingAddressJa(form, Address.JapanPrefectures))
           case Locale.JAPAN =>
             Ok(views.html.shippingAddressJa(form, Address.JapanPrefectures))
-        
+
           case _ =>
             Ok(views.html.shippingAddressJa(form, Address.JapanPrefectures))
         }
