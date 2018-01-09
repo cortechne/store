@@ -116,7 +116,7 @@ object Shipping extends Controller with NeedLogin with HasLogger with I18nAware 
 
   val Zip1Pattern = Pattern.compile("\\d{0,3}")
   val Zip2Pattern = Pattern.compile("\\d{0,4}")
-  val TelPattern = Pattern.compile("\\d+{0,32}")
+  val TelPattern = Pattern.compile("\\d{0,32}")
   val TelOptionPattern = Pattern.compile("\\d{0,32}")
   def shippingDateFormat(implicit lang: Lang) = DateTimeFormat.forPattern(Messages("shipping.date.format"))
 
