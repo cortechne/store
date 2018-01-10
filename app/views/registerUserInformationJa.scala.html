@@ -18,22 +18,7 @@
 } {
 
   <h2 class="title">@Messages("registerUserInformation")</h2>
-  <style>
-    #top {
-      padding: 5%;
-    }
-    .input {
-      position: relative;
-    }
-    .help-block {
-      position: absolute;
-      top: 0;
-      margin-top: -12px;
-    }
-    label {
-      padding-left: 37px;
-    }
-  </style>
+
   @if(myForm.hasErrors) {
     <div class="globalErrorMessage">
       @Messages("inputError")
