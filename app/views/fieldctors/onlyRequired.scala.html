@@ -13,11 +13,12 @@
 
 <div class="clearfix @elements.args.get('_class) @if(elements.hasErrors) {error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
     <label for="@elements.id">@elements.label(elements.lang)</label>
+    <span class="help-block">
+      @elements.infos(elements.lang).filter(_.equals(Messages("constraint.required"))).mkString(", ")
+    </span>
     <div class="input">
         @elements.input
-        <span class="help-block">
-          @elements.infos(elements.lang).filter(_.equals(Messages("constraint.required"))).mkString(", ")
-        </span> 
+
         <span class="help-inline">@elements.errors(elements.lang).mkString(", ")</span>
     </div>
 </div>
