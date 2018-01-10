@@ -27,7 +27,7 @@ object UserRegistration {
     address1: String="",
     address2: String="",
     address3: String,
-    tel: String,
+    tel: String="",
     fax: String,
     title: String,
     firstName: String,
