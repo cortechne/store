@@ -154,8 +154,8 @@ object UserEntry extends Controller with HasLogger with I18nAware with NeedLogin
       "email" -> email.verifying(emailConstraint: _*),
       "currentPassword" -> text.verifying(nonEmpty, maxLength(24)),
       "password" -> tuple(
-        "main" -> text.verifying(passwordConstraint: _*),
-        "confirm" -> text
+        "main" -> text.verifying(passwordConstraint: _*).verifying(nonEmpty),
+        "confirm" -> text.verifying(nonEmpty)
       ).verifying(
         Messages("confirmPasswordDoesNotMatch"), passwords => passwords._1 == passwords._2
       ),
