@@ -24,7 +24,7 @@ object UserEntryMail extends HasLogger {
           val mail = Email(
             subject = Messages("mail.user.registration.subject"),
             // to = Seq(admin.email),
-            to = Seq("kaori@cortechne.jp")
+            to = Seq("kaori@cortechne.jp"),
             from = from,
             bodyText = Some(body)
           )
