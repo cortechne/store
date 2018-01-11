@@ -23,8 +23,8 @@ object UserEntryMail extends HasLogger {
         Akka.system.scheduler.scheduleOnce(0.microsecond) {
           val mail = Email(
             subject = Messages("mail.user.registration.subject"),
-            // to = Seq(admin.email),
-            to = Seq("kaori@cortechne.jp"),
+            to = Seq(admin.email),
+            // to = Seq("kaori@cortechne.jp"),
             from = from,
             bodyText = Some(body)
           )
