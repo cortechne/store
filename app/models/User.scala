@@ -134,13 +134,13 @@ object StoreUser {
     SqlParser.get[Int]("store_user.stretch_count") map {
       case id~userName~firstName~middleName~lastName~email~passwordHash~salt~deleted~userRole~companyName~stretchCount =>
         StoreUser(
-          id, userName, firstName, middleName, lastName, email, passwordHash, 
+          id, userName, firstName, middleName, lastName, email, passwordHash,
           salt, deleted, UserRole.byIndex(userRole), companyName, stretchCount
         )
     }
   }
 
-  val withSiteUser = 
+  val withSiteUser =
     StoreUser.simple ~
     (SiteUser.simple ?) ~
     (Site.simple ?) ~
@@ -148,7 +148,7 @@ object StoreUser {
       case storeUser~siteUser~site~notificationId => ListUserEntry(storeUser, siteUser, site, notificationId.isDefined)
     }
 
-  def count(implicit conn: Connection) = 
+  def count(implicit conn: Connection) =
     SQL("select count(*) from store_user where deleted = FALSE").as(SqlParser.scalar[Long].single)
 
   def apply(id: Long)(implicit conn: Connection): StoreUser =
@@ -157,7 +157,7 @@ object StoreUser {
     ).on(
       'id -> id
     ).as(StoreUser.simple.single)
-  
+
   def findByUserName(userName: String)(implicit conn: Connection): Option[StoreUser] =
     SQL(
       "select * from store_user where user_name = {user_name} and deleted = FALSE"
@@ -178,7 +178,7 @@ object StoreUser {
     SQL(
       """
       insert into store_user (
-        store_user_id, user_name, first_name, middle_name, last_name, email, password_hash, 
+        store_user_id, user_name, first_name, middle_name, last_name, email, password_hash,
         salt, deleted, user_role, company_name, stretch_count
       ) values (
         (select nextval('store_user_seq')),
@@ -222,12 +222,12 @@ object StoreUser {
   }
 
   def listUsers(
-    page: Int = 0, pageSize: Int = 50, 
+    page: Int = 0, pageSize: Int = 50,
     orderBy: OrderBy = OrderBy("store_user.user_name"), employeeSiteId: Option[Long] = None
   )(implicit conn: Connection): PagedRecords[ListUserEntry] = {
     val list = SQL(
       s"""
-      select 
+      select
         *,
         store_user.first_name || coalesce(store_user.middle_name, '') || store_user.last_name as full_name,
         (store_user.user_role + coalesce(site_user.site_id, 0)) as store_user_role
@@ -462,6 +462,7 @@ object StoreUser {
     }
 
     if (csvRecs.isEmpty) {
+      logger.info("----csvRecs empty----")
       0
     }
     else {
