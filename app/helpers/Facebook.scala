@@ -142,11 +142,12 @@ object Facebook {
   def apply(appId: String, appSecret: String): Facebook = new Facebook(appId, appSecret)
   def stripPrefix(prefix: String)(s: String): Either[String, String] = {
       logger.info(s)
+      logger.info(prefix)
     if (s.startsWith(prefix)) Right(s.substring(prefix.length)) else Left(s)
   }
 
 
-  val AccessTokenExtractor: String => Either[String, String] = stripPrefix("access_token=") _
+  val AccessTokenExtractor: String => Either[String, String] = stripPrefix("{\"access_token=") _
 
   def parsePostsV25(json: JsValue): immutable.Seq[FacebookPostV25] =
     (json \ "data").as[JsArray].value.map(FacebookPostV25.apply).to[immutable.Seq]
