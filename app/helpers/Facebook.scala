@@ -147,7 +147,7 @@ object Facebook {
   }
 
 
-  val AccessTokenExtractor: String => Either[String, String] = stripPrefix("{\"access_token=") _
+  val AccessTokenExtractor: String => Either[String, String] = stripPrefix("{\"access_token\":") _
 
   def parsePostsV25(json: JsValue): immutable.Seq[FacebookPostV25] =
     (json \ "data").as[JsArray].value.map(FacebookPostV25.apply).to[immutable.Seq]
