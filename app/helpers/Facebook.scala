@@ -122,7 +122,7 @@ class Facebook(
       resp.status == Results.Ok.header.status,
       "Status invalid (=" + resp.status + ") appId: '" + appId + "'"
     )
-println(resp.body)
+  logger.info(resp.body)
     AccessTokenExtractor(resp.body) match {
       case Left(e) => throw new RuntimeException(
         "Acquiring access token response from Facebook for '" + appId + "' is invalid '" + e + "'."
@@ -141,7 +141,7 @@ object Facebook {
 
   def apply(appId: String, appSecret: String): Facebook = new Facebook(appId, appSecret)
   def stripPrefix(prefix: String)(s: String): Either[String, String] = {
-    println(s)
+      logger.info(s)
     if (s.startsWith(prefix)) Right(s.substring(prefix.length)) else Left(s)
   }
 
